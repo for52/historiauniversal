@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evaluación de Historia Universal</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/poppins@5.0.8/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/permanent-marker@5.0.12/index.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    background-attachment: fixed;
+    padding: 20px;
+    color: #2d3748;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.97);
+    border-radius: 25px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+    padding: 40px;
+    animation: fadeIn 0.6s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  h1 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    text-align: center;
+    background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+  }
+  h2 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    margin: 25px 0 15px;
+  }
+  .title-1 { color: #e74c3c; }
+  .title-2 { color: #3498db; }
+  .title-3 { color: #f39c12; }
+  .title-4 { color: #9b59b6; }
+  .title-5 { color: #27ae60; }
+  .subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 30px;
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+    color: #4a5568;
+  }
+  input, select {
+    width: 100%;
+    padding: 14px 18px;
+    font-size: 1.1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-family: inherit;
+    transition: all 0.3s;
+    background: #fff;
+  }
+  input:focus, select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+  }
+  .btn {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 16px 40px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    font-family: inherit;
+    letter-spacing: 1px;
+    display: block;
+    margin: 30px auto 0;
+  }
+  .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(102, 126, 234, 0.5);
+  }
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+  .btn-finish {
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+    box-shadow: 0 8px 20px rgba(17, 153, 142, 0.4);
+  }
+  .timer {
+    position: sticky;
+    top: 10px;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 25px rgba(238, 90, 36, 0.4);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .timer.warning {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    animation: pulse 1s infinite;
+  }
+  .timer.danger {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    animation: pulse 0.5s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  .timer-icon {
+    font-size: 1.8rem;
+  }
+  .question-card {
+    background: linear-gradient(135deg, #f5f7fa, #ffffff);
+    border-left: 6px solid;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s;
+  }
+  .question-card:hover { transform: translateX(5px); }
+  .q-border-1 { border-color: #e74c3c; }
+  .q-border-2 { border-color: #3498db; }
+  .q-border-3 { border-color: #f39c12; }
+  .q-border-4 { border-color: #9b59b6; }
+  .q-border-5 { border-color: #27ae60; }
+  .question-text {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #2d3748;
+  }
+  .q-number {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 35px;
+    margin-right: 10px;
+    font-weight: 700;
+  }
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option {
+    display: flex;
+    align-items: center;
+    padding: 12px 18px;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1.05rem;
+  }
+  .option:hover {
+    background: #f0f4ff;
+    border-color: #667eea;
+  }
+  .option input[type="radio"] {
+    width: auto;
+    margin-right: 12px;
+    accent-color: #667eea;
+    transform: scale(1.3);
+  }
+  .option.selected {
+    background: linear-gradient(135deg, #667eea22, #764ba222);
+    border-color: #667eea;
+    font-weight: 600;
+  }
+  .match-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .match-concept {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(102,126,234,0.3);
+  }
+  select {
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  .section-divider {
+    height: 4px;
+    background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #11998e);
+    border-radius: 10px;
+    margin: 40px 0 30px;
+  }
+  .results {
+    text-align: center;
+    padding: 20px;
+  }
+  .score-circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: conic-gradient(#11998e var(--pct), #e2e8f0 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px auto;
+    position: relative;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  }
+  .score-circle::before {
+    content: '';
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: white;
+    position: absolute;
+  }
+  .score-inner {
+    position: relative;
+    z-index: 1;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #11998e;
+  }
+  .student-name {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 2rem;
+    color: #667eea;
+    margin: 20px 0;
+  }
+  .score-details {
+    background: linear-gradient(135deg, #f5f7fa, #ffffff);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: left;
+  }
+  .score-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 1.1rem;
+  }
+  .score-row:last-child {
+    border-bottom: none;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: #11998e;
+  }
+  .feedback {
+    font-size: 1.3rem;
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 15px;
+    font-weight: 600;
+  }
+  .feedback-good {
+    background: linear-gradient(135deg, #11998e22, #38ef7d22);
+    color: #11998e;
+  }
+  .feedback-medium {
+    background: linear-gradient(135deg, #f39c1222, #e67e2222);
+    color: #e67e22;
+  }
+  .feedback-low {
+    background: linear-gradient(135deg, #e74c3c22, #c0392b22);
+    color: #c0392b;
+  }
+  .error-msg {
+    color: #e74c3c;
+    font-size: 0.95rem;
+    margin-top: 5px;
+    display: none;
+  }
+  .error-msg.show { display: block; }
+  .progress-bar {
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 30px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    width: 0%;
+    transition: width 0.4s;
+  }
+  .hidden { display: none; }
+  @media (max-width: 600px) {
+    .container { padding: 20px; }
+    .match-row { grid-template-columns: 1fr; }
+    .timer { font-size: 1.2rem; padding: 12px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- PANTALLA INICIAL -->
+  <div id="startScreen">
+    <h1>🌍 Historia Universal 📚</h1>
+    <p class="subtitle">Evaluación interactiva · 10 preguntas · 5 minutos</p>
+    <h2 class="title-2">✏️ Datos del estudiante</h2>
+    <div class="form-group">
+      <label for="studentName">Nombre completo:</label>
+      <input type="text" id="studentName" placeholder="Escribe tu nombre">
+      <p class="error-msg" id="errName">⚠️ Por favor ingresa tu nombre</p>
+    </div>
+    <div class="form-group">
+      <label for="studentEmail">Correo electrónico:</label>
+      <input type="email" id="studentEmail" placeholder="ejemplo@correo.com">
+      <p class="error-msg" id="errEmail">⚠️ Ingresa un correo válido</p>
+    </div>
+    <div style="background:linear-gradient(135deg,#fff3cd,#ffe69c);padding:20px;border-radius:15px;margin:20px 0;">
+      <h3 style="color:#856404;margin-bottom:10px;">📋 Instrucciones:</h3>
+      <ul style="color:#856404;line-height:1.8;padding-left:20px;">
+        <li>5 preguntas de opción múltiple</li>
+        <li>5 preguntas de relacionar conceptos</li>
+        <li>Cada pregunta vale <strong>10 puntos</strong></li>
+        <li>Terminar en menos de 3 minutos: <strong>+5 puntos extras</strong></li>
+        <li>Terminar entre 1 y 2 minutos: <strong>+3 puntos extras</strong></li>
+      </ul>
+    </div>
+    <button class="btn" id="startBtn">🚀 Comenzar Evaluación</button>
+  </div>
+
+  <!-- PANTALLA DEL QUIZ -->
+  <div id="quizScreen" class="hidden">
+    <div class="timer" id="timer">
+      <span class="timer-icon">⏱️</span>
+      <span>Tiempo restante: <span id="timeDisplay">05:00</span></span>
+    </div>
+    <h1 style="font-size:clamp(1.5rem,4vw,2.5rem);">📝 Evaluación en Curso</h1>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+    <h2 class="title-1">🎯 Opción Múltiple</h2>
+    <p class="subtitle">Selecciona la respuesta correcta (10 pts c/u)</p>
+    <div id="mcQuestions"></div>
+
+    <div class="section-divider"></div>
+
+    <h2 class="title-3">🔗 Relacionar Conceptos</h2>
+    <p class="subtitle">Asocia cada concepto con su definición correcta (10 pts c/u)</p>
+    <div id="matchQuestions"></div>
+
+    <button class="btn btn-finish" id="finishBtn">✅ Finalizar Evaluación</button>
+  </div>
+
+  <!-- PANTALLA DE RESULTADOS -->
+  <div id="resultScreen" class="hidden">
+    <div class="results">
+      <h1>🎓 Resultados Finales 🎓</h1>
+      <p class="student-name" id="resultName"></p>
+      <div class="score-circle" id="scoreCircle" style="--pct:0%">
+        <div class="score-inner" id="scoreInner">0</div>
+      </div>
+      <div id="feedbackMsg"></div>
+      <div class="score-details">
+        <div class="score-row"><span>Preguntas correctas:</span><span id="correctCount">0/10</span></div>
+        <div class="score-row"><span>Puntaje base:</span><span id="baseScore">0</span></div>
+        <div class="score-row"><span>Puntos extra por tiempo:</span><span id="bonusScore">0</span></div>
+        <div class="score-row"><span>Tiempo restante:</span><span id="timeRemaining">-</span></div>
+        <div class="score-row"><span>🏆 CALIFICACIÓN FINAL:</span><span id="finalScore">0</span></div>
+      </div>
+      <button class="btn" id="restartBtn">🔄 Reiniciar Evaluación</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ============ DATOS DE LAS PREGUNTAS ============
+const mcQuestionsData = [
+  {
+    q: "¿En qué año cayó el Imperio Romano de Occidente?",
+    options: ["1453 d.C.", "476 d.C.", "323 d.C.", "800 d.C."],
+    correct: 1
+  },
+  {
+    q: "¿Quién fue el primer presidente de los Estados Unidos?",
+    options: ["Thomas Jefferson", "Abraham Lincoln", "George Washington", "Benjamin Franklin"],
+    correct: 2
+  },
+  {
+    q: "¿En qué año inició la Revolución Francesa?",
+    options: ["1776", "1815", "1789", "1848"],
+    correct: 2
+  },
+  {
+    q: "¿Qué civilización construyó las pirámides de Giza?",
+    options: ["Mesopotámica", "Griega", "Egipcia", "Fenicia"],
+    correct: 2
+  },
+  {
+    q: "¿En qué año finalizó la Segunda Guerra Mundial?",
+    options: ["1945", "1939", "1943", "1948"],
+    correct: 0
+  }
+];
+
+const matchQuestionsData = [
+  { concept: "Renacimiento", definition: "Movimiento cultural europeo de los siglos XV-XVI" },
+  { concept: "Ilustración", definition: "Corriente filosófica del siglo XVIII basada en la razón" },
+  { concept: "Revolución Industrial", definition: "Transformación económica iniciada en Inglaterra en el siglo XVIII" },
+  { concept: "Guerra Fría", definition: "Conflicto ideológico entre EE.UU. y la URSS tras 1945" },
+  { concept: "Imperialismo", definition: "Política de expansión y dominio de territorios extranjeros" }
+];
+
+// ============ VARIABLES GLOBALES ============
+let timeLeft = 300;
+let timerInterval = null;
+let studentName = '';
+let studentEmail = '';
+
+// ============ INICIALIZACIÓN ============
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('startBtn').addEventListener('click', startQuiz);
+  document.getElementById('finishBtn').addEventListener('click', finishQuiz);
+  document.getElementById('restartBtn').addEventListener('click', function() {
+    location.reload();
+  });
+});
+
+// ============ INICIO DEL QUIZ ============
+function startQuiz() {
+  const name = document.getElementById('studentName').value.trim();
+  const email = document.getElementById('studentEmail').value.trim();
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  let valid = true;
+  if (!name) {
+    document.getElementById('errName').classList.add('show');
+    valid = false;
+  } else {
+    document.getElementById('errName').classList.remove('show');
+  }
+  if (!emailRegex.test(email)) {
+    document.getElementById('errEmail').classList.add('show');
+    valid = false;
+  } else {
+    document.getElementById('errEmail').classList.remove('show');
+  }
+
+  if (!valid) return;
+
+  studentName = name;
+  studentEmail = email;
+
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('quizScreen').classList.remove('hidden');
+
+  renderQuestions();
+  startTimer();
+}
+
+// ============ RENDERIZAR PREGUNTAS ============
+function renderQuestions() {
+  const mcContainer = document.getElementById('mcQuestions');
+  const borderClasses = ['q-border-1','q-border-2','q-border-3','q-border-4','q-border-5'];
+  
+  mcQuestionsData.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = `question-card ${borderClasses[i%5]}`;
+    
+    let optionsHTML = '';
+    q.options.forEach((opt, j) => {
+      optionsHTML += `
+        <label class="option" data-question="${i}" data-option="${j}">
+          <input type="radio" name="q${i}" value="${j}">
+          <span>${opt}</span>
+        </label>
+      `;
+    });
+    
+    card.innerHTML = `
+      <p class="question-text"><span class="q-number">${i+1}</span>${q.q}</p>
+      <div class="options">${optionsHTML}</div>
+    `;
+    mcContainer.appendChild(card);
+  });
+
+  // Agregar event listeners para las opciones
+  document.querySelectorAll('#mcQuestions .option').forEach(option => {
+    option.addEventListener('click', function(e) {
+      const radio = this.querySelector('input[type="radio"]');
+      radio.checked = true;
+      
+      // Remover selección de otras opciones en la misma pregunta
+      const questionNum = this.getAttribute('data-question');
+      document.querySelectorAll(`[data-question="${questionNum}"]`).forEach(o => {
+        o.classList.remove('selected');
+      });
+      this.classList.add('selected');
+      updateProgress();
+    });
+  });
+
+  const matchContainer = document.getElementById('matchQuestions');
+  const shuffledDefs = [...matchQuestionsData].sort(() => Math.random() - 0.5);
+  
+  matchQuestionsData.forEach((item, i) => {
+    const row = document.createElement('div');
+    row.className = 'question-card ' + borderClasses[i%5];
+    
+    let selectOptions = '<option value="">-- Selecciona --</option>';
+    shuffledDefs.forEach(d => {
+      selectOptions += `<option value="${d.definition}">${d.definition}</option>`;
+    });
+    
+    row.innerHTML = `
+      <p class="question-text"><span class="q-number">${i+6}</span>Relaciona el concepto:</p>
+      <div class="match-row">
+        <div class="match-concept">${item.concept}</div>
+        <select data-correct="${item.definition}" data-match="${i}">
+          ${selectOptions}
+        </select>
+      </div>
+    `;
+    matchContainer.appendChild(row);
+  });
+
+  // Agregar event listeners para los selects
+  document.querySelectorAll('#matchQuestions select').forEach(select => {
+    select.addEventListener('change', updateProgress);
+  });
+}
+
+function updateProgress() {
+  const total = 10;
+  const mc = document.querySelectorAll('#mcQuestions input[type=radio]:checked').length;
+  const matchSelects = document.querySelectorAll('#matchQuestions select');
+  let mt = 0;
+  matchSelects.forEach(sel => {
+    if (sel.value !== '') mt++;
+  });
+  const pct = ((mc + mt) / total) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+// ============ TIMER ============
+function startTimer() {
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      alert('⏰ ¡Se acabó el tiempo!');
+      finishQuiz();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const min = Math.floor(timeLeft / 60);
+  const sec = timeLeft % 60;
+  document.getElementById('timeDisplay').textContent = 
+    `${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+  
+  const timer = document.getElementById('timer');
+  timer.classList.remove('warning','danger');
+  if (timeLeft <= 60) timer.classList.add('danger');
+  else if (timeLeft <= 120) timer.classList.add('warning');
+}
+
+// ============ FINALIZAR QUIZ ============
+function finishQuiz() {
+  clearInterval(timerInterval);
+  let correctCount = 0;
+
+  // Revisar opción múltiple
+  mcQuestionsData.forEach((q, i) => {
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    if (selected && parseInt(selected.value) === q.correct) correctCount++;
+  });
+
+  // Revisar relacionar
+  document.querySelectorAll('#matchQuestions select').forEach(sel => {
+    if (sel.value === sel.dataset.correct) correctCount++;
+  });
+
+  const baseScore = correctCount * 10;
+  let bonus = 0;
+  if (timeLeft > 120) bonus = 5;
+  else if (timeLeft > 60 && timeLeft <= 120) bonus = 3;
+
+  const finalScore = baseScore + bonus;
+  const targetPct = (finalScore / 105) * 100;
+
+  // Mostrar resultados
+  document.getElementById('quizScreen').classList.add('hidden');
+  document.getElementById('resultScreen').classList.remove('hidden');
+
+  document.getElementById('resultName').textContent = `👤 ${studentName}`;
+  document.getElementById('correctCount').textContent = `${correctCount}/10`;
+  document.getElementById('baseScore').textContent = `${baseScore} pts`;
+  document.getElementById('bonusScore').textContent = `+${bonus} pts`;
+  
+  const minLeft = Math.floor(timeLeft / 60);
+  const secLeft = timeLeft % 60;
+  document.getElementById('timeRemaining').textContent = 
+    `${String(minLeft).padStart(2,'0')}:${String(secLeft).padStart(2,'0')}`;
+  
+  document.getElementById('finalScore').textContent = `${finalScore} / 105`;
+
+  // Animar círculo
+  const circle = document.getElementById('scoreCircle');
+  const scoreInner = document.getElementById('scoreInner');
+  let currentPct = 0;
+  let currentScore = 0;
+  
+  const anim = setInterval(() => {
+    currentPct += 2;
+    currentScore = Math.round((currentPct / targetPct) * finalScore);
+    if (currentScore > finalScore) currentScore = finalScore;
+    if (currentPct >= targetPct) {
+      currentPct = targetPct;
+      currentScore = finalScore;
+      clearInterval(anim);
+    }
+    circle.style.setProperty('--pct', currentPct + '%');
+    scoreInner.textContent = currentScore;
+  }, 20);
+
+  // Mensaje de feedback
+  const fb = document.getElementById('feedbackMsg');
+  if (finalScore >= 90) {
+    fb.innerHTML = `<div class="feedback feedback-good">🌟 ¡Excelente trabajo! Dominas la historia universal.</div>`;
+  } else if (finalScore >= 60) {
+    fb.innerHTML = `<div class="feedback feedback-medium">👍 ¡Buen trabajo! Puedes mejorar repasando algunos temas.</div>`;
+  } else {
+    fb.innerHTML = `<div class="feedback feedback-low">📖 Necesitas repasar. ¡Ánimo, la práctica hace al maestro!</div>`;
+  }
+
+  // Color del score según calificación
+  const color = finalScore >= 90 ? '#11998e' : finalScore >= 60 ? '#f39c12' : '#e74c3c';
+  scoreInner.style.color = color;
+  circle.style.background = `conic-gradient(${color} ${targetPct}%, #e2e8f0 0)`;
+}
+</script>
+
+</body>
+</html>
+
